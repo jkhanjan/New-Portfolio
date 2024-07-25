@@ -101,7 +101,7 @@ const Footer = () => {
       </div>
 
       <div
-        className="flex text-8xl w-fit mx-auto font-semibold text-blue-950 overflow-hidden sm:text-[15rem] leading-none"
+        className="flex text-6xl items-center w-fit mx-auto font-semibold text-blue-950 overflow-hidden sm:text-[15rem] leading-none"
         ref={textRef}
       >
         <img

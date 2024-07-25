@@ -85,7 +85,7 @@ const Landing = () => {
       <div className="w-full absolute top-0">
         <div className="text max-w-screen-2xl h-full mx-auto px-5 sm:px-10 text-white">
           <div className="headings mt-56 sm:mt-40">
-            <h1 className="text-7xl uppercase font-semibold sm:text-[10rem] tracking-[-5px] font-MyCustomFont italic">
+            <h1 className="text-6xl uppercase font-semibold sm:text-[10rem] tracking-[-7px] font-MyCustomFont italic">
               <span>a</span>
               <motion.span
                 initial={{ rotate: 0, y: "50%", opacity: 0 }}
@@ -131,7 +131,7 @@ const Landing = () => {
                 c
               </motion.span>
             </h1>
-            <h1 className="text-7xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
+            <h1 className="text-6xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
               <motion.span
                 initial={{ rotate: 0, x: "-60%", opacity: 0 }}
                 animate={{ rotate: 0, x: 0, opacity: 1 }}
@@ -176,7 +176,7 @@ const Landing = () => {
                 s
               </motion.span>
             </h1>
-            <h1 className="text-7xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
+            <h1 className="text-6xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
               <motion.span
                 initial={{ rotate: 70, y: "-50%", opacity: 0 }}
                 animate={{ rotate: 0, y: 0, opacity: 1 }}
@@ -212,7 +212,7 @@ const Landing = () => {
                 n
               </motion.span>
             </h1>
-            <h1 className="text-7xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
+            <h1 className="text-6xl uppercase font-bold sm:text-[10rem] tracking-[-4px] ">
               <motion.span
                 initial={{ rotate: -70, y: "10%", opacity: 0 }}
                 animate={{ rotate: 0, y: 0, opacity: 1 }}
