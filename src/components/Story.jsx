@@ -26,7 +26,7 @@ const Story = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-full h-[130vh] sm:h-screen overflow-hidden">
       <img
         data-scroll
         data-scroll-speed="-0.7"
@@ -35,12 +35,12 @@ const Story = () => {
         alt=""
       />
       <div className="overflow-hidden">
-        <h1 className="text-5xl tracking-tighter font-serif font-semibold flex items-center justify-center mt-10 sm:text-9xl sm:mt-8">
+        <h1 className="text-5xl tracking-tighter italic flex items-center justify-center mt-10 sm:text-9xl sm:mt-8 text-blue-950">
           Our Story
         </h1>
       </div>
-      <div className="sm:flex sm:mt-4">
-        <div className="text-[1rem] tracking-tighter mt-10 text-gray-500 flex flex-col p-10 pt-0 sm:w-2/3 sm:text-[1.7rem]">
+      <div className="sm:flex sm:mt-4 text-blue-950">
+        <div className="text-[1rem] tracking-tight mt-10 text-blue-500 flex flex-col p-10 pt-0 sm:w-2/3 sm:text-[1.8rem] sm:gap-2">
           {[
             "Our vision is to provide authentic Indian Ayurvedic Herbal Tea across the world and while on this journey we commit to the advancement of the community along with us.",
             "We are poised to change the lives of over 1000 farmers' families by 2025.",

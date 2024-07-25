@@ -6,6 +6,8 @@ const BestOf = () => {
       subheading: "Hibiscus Classic Herbal Infusion - 100 Teabags",
       image:
         "https://bluetea.co.in/cdn/shop/files/Hibiscus-Mint_1800x1800_cd601b79-82a8-424d-9638-b22baa675a1a_1080x.jpg?v=1718707925",
+      hoverImage:
+        "https://m.media-amazon.com/images/I/71D8X+QMJwL._AC_UF1000,1000_QL80_.jpg",
       price: "749",
       buttonColor: "red-400",
       para: "Delight in the rich taste and numerous benefits of Hibiscus.",
@@ -13,22 +15,26 @@ const BestOf = () => {
     {
       subheading: "Butterfly Pea Flower Herbal Infusion - 200 teabags",
       image: "https://bluetea.co.in/cdn/shop/files/BT100PTB.png?v=1718697956",
+      hoverImage: "https://m.media-amazon.com/images/I/71GqHr6cJ-L._SX679_.jpg",
       price: "1249",
-      buttonColor: "yellow-400",
+      buttonColor: "red-400",
       para: "Experience the natural blue tint and health benefits of Butterfly Pea Flower.",
     },
     {
       subheading: "Chamomile Citrus Mint Herbal Infusion - 30 Tea Bags",
       image:
         "https://bluetea.co.in/cdn/shop/files/5._30TB_-_CHMINT_31ed28dc-e533-4bbf-a29b-4575cd7e5a65_400x.png?v=1718612538",
+      hoverImage:
+        "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/25230322/2023/9/26/0d8b8a20-6e2b-49f3-a0ca-c0c772888fed1695711300030Tea1.jpg",
       price: "369",
-      buttonColor: "yellow-400",
+      buttonColor: "red-400",
       para: "Unwind with our Ayurvedic tea for sleep and calmness.",
     },
     {
       subheading: "Flower Herbal Infusion - Pack of 4",
       image:
         "https://bluetea.co.in/cdn/shop/files/01.FrontPackof7_1080x.jpg?v=1718795636",
+      hoverImage: "https://m.media-amazon.com/images/I/61wMdWJl6gL._SX679_.jpg",
       price: "749",
       buttonColor: "red-400",
       para: "A curated pack of our finest flower herbal infusions.",
@@ -96,7 +102,7 @@ const BestOf = () => {
         className="absolute inset-0 bg-contain bg-center opacity-10 z-0 transition-opacity transition-background-image duration-500 ease-in-out"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       ></div>
-      <h1 className="text-4xl text-center mb-8 font-serif sm:text-6xl relative z-10">
+      <h1 className="text-4xl text-center mb-8 sm:text-6xl relative z-10">
         Our Best Products
       </h1>
       <div
@@ -114,12 +120,19 @@ const BestOf = () => {
               <img
                 data-scroll
                 data-scroll-speed="0.05"
+                src={elem.hoverImage}
+                alt={elem.subheading}
+                className="w-full sm:h-[60vh] h-[50vh] object-cover absolute"
+              />
+              <img
+                data-scroll
+                data-scroll-speed="0.05"
                 src={elem.image}
                 alt={elem.subheading}
-                className="w-full sm:h-[60vh] h-[50vh] object-cover"
+                className="w-full h-full opacity-100 hover:opacity-0 transition-all sm:h-[60vh] h-[50vh] object-cover"
               />
               <div className="p-4 absolute bg-slate-50 opacity-90 z-10 bottom-0 left-0 w-full h-20 group-hover:h-60 overflow-hidden transition-all duration-500 ease-in-out">
-                <h2 className="text-xl mb-2">{elem.subheading}</h2>
+                <h2 className="text-xl mb-2 sm:text-[1.3rem] italic">{elem.subheading}</h2>
                 {elem.price && (
                   <p className="text-lg font-bold text-gray-700 mb-2">
                     ₹{elem.price}

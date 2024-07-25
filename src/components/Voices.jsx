@@ -105,7 +105,7 @@ const Voices = () => {
   return (
     <div className="p-8 bg-gray-50 w-full">
       <div className="overflow-hidden">
-        <h1 className="text-4xl tracking-tighter font-semibold flex items-center justify-center mt-10 sm:text-9xl sm:mt-20 mb-8">
+        <h1 className="text-4xl text-blue-950 tracking-tighter flex items-center justify-center mt-10 sm:text-9xl sm:mt-20 mb-8">
           Customers Opinions
         </h1>
       </div>
@@ -120,8 +120,8 @@ const Voices = () => {
           >
             <img
               data-scroll
-              data-scroll-speed="-0.2"
-              className="absolute w-full z-[10] opacity-10"
+              data-scroll-speed="-0.05"
+              className="absolute w-full z-[10] opacity-10 object-fit h-full"
               src={elem.image}
               alt=""
             />
@@ -134,9 +134,9 @@ const Voices = () => {
                   {elem.para}
                 </p>
               )}
-              {elem.para2 && <p className="text-gray-600 mb-4">{elem.para2}</p>}
+              {elem.para2 && <p className="text-blue-600 mb-4">{elem.para2}</p>}
               {elem.end && (
-                <p className="text-gray-600 mb-4 sm:font-bold">{elem.end}</p>
+                <p className=" mb-4 sm:font-bold text-blue-90">{elem.end}</p>
               )}
             </div>
           </div>

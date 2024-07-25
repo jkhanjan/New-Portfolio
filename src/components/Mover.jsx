@@ -56,7 +56,7 @@ const Mover = () => {
       ease: Power4.easeOut,
     });
 
-    tl2.from(moverElem2, { 
+    tl2.from(moverElem2, {
       translateX: "-20%",
     });
 
@@ -107,52 +107,52 @@ const Mover = () => {
         >
           <img
             ref={imageRefs2.left}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc5xC7N96YTf9-Guq4SZsBFY6PpEUXS0S85g&s"
+            src="https://images.unsplash.com/photo-1554675427-1d637bdb5a12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGRyaW5raW5nJTIwaGVyYmFsJTIwdGVhfGVufDB8fDB8fHww"
             alt=""
-            className="mr-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all"
+            className="mr-4 w-[12rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all object-contain"
           />
           <img
             ref={imageRefs2.middle}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnE_67f37wm7V5_NBCr2lzlvoXOGot_rvoVw&s"
+            src="https://images.unsplash.com/photo-1484836443634-3d3fd80edccf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZHJpbmtpbmclMjBoZXJiYWwlMjB0ZWF8ZW58MHwwfDB8fHww"
             alt=""
-            className="mr-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all"
+            className="mr-4 w-[10rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all"
           />{" "}
           <img
             ref={imageRefs2.right}
-            src="https://bluetea.co.in/cdn/shop/files/Hibiscus-banner-vitamin-C_2_1944x.gif?v=1718774645"
+            src="https://images.unsplash.com/photo-1541552397352-768f216c75ea?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRyaW5raW5nJTIwaGVyYmFsJTIwdGVhfGVufDB8MHwwfHx8MA%3D%3D"
             alt=""
-            className="ml-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl object-cover hover:scale-105 transition-all"
+            className="ml-4 w-[10rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl object-cover hover:scale-105 transition-all"
           />
           <img
             ref={imageRefs2.right}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStMP129XoLaJXKKeeJCKdFFJnA85vbtjpyOQ&s"
             alt=""
-            className="ml-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl object-cover hover:scale-105 transition-all"
+            className="ml-4 w-[10rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl object-cover hover:scale-105 transition-all"
+          />
+          <img
+            ref={imageRefs2.right}
+            src="https://images.unsplash.com/photo-1668733521099-c120aa4ebbdc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGRyaW5raW5nJTIwaGVyYmFsJTIwdGVhfGVufDB8MHwwfHx8MA%3D%3D"
+            alt=""
+            className="ml-4 w-[10rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all"
           />
           <img
             ref={imageRefs2.right}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlJ3wsg5Es66YNoDmYGFVLhh-KJUV0N2RXCw&s"
             alt=""
-            className="ml-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl hover:scale-105 transition-all"
-          />
-          <img
-            ref={imageRefs2.right}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlJ3wsg5Es66YNoDmYGFVLhh-KJUV0N2RXCw&s"
-            alt=""
-            className="ml-4 w-[5rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl"
+            className="ml-4 w-[10rem] sm:w-[23rem] sm:h-[25vh] rounded-3xl"
           />
         </div>
       </div>
-      <div className="w-full h-fit bg-gray-100 text-5xl sm:text-7xl sm:font-semibold flex items-center overflow-hidden whitespace-nowrap text-ellipsis tracking-wide ">
-        <div 
-          className="flex items-center tracking-tight text-gray-500 gap-4 translate-x-[-30vw]"
+      <div className="w-full h-fit bg-gray-100 text-5xl sm:text-7xl flex items-center overflow-hidden whitespace-nowrap text- tracking-wide ">
+        <div
+          className="flex items-center tracking-tight text-blue-950 gap-4 translate-x-[-30vw] italic"
           ref={mover1}
         >
           <img
             ref={imageRefs1.left}
             src="https://www.svgrepo.com/show/159267/flower-of-complex-design-shape.svg"
             alt=""
-            className="mr-4 w-[5rem] sm:w-[8rem]"
+            className="mr-4 w-[5rem] sm:w-[5rem]"
           />
           Blue Tea is an Indian Ayurvedic Flower Herbal Tea Brand{" "}
           <img
@@ -170,7 +170,6 @@ const Mover = () => {
           />
         </div>
       </div>
-     
     </>
   );
 };

@@ -110,31 +110,30 @@ const Intrested = () => {
       <div className="overflow-hidden h-fit mt-4 ">
         <p
           ref={heading2}
-          className="w-full flex items-center justify-center text-2xl font-semibold overflow-hidden mb-4"
+          className="w-full flex items-center mx-auto justify-center text-2xl font-semibold overflow-hidden mb-4 hover:border-b-2 sm:border-black sm:w-fit"
         >
-          HERE MORE OF THEM...
+          CLICK HERE MORE OF THEM...
         </p>
       </div>
       <div
         ref={sliderRef}
-        className="flex gap-8 overflow-x-scroll scrollbar-hide sm:overflow-x-hidden"
+        className="flex gap-8 overflow-x-scroll scrollbar-hide sm:overflow-x-hidden p-4"
       >
         {elems.map((elem, index) => (
           <div
             key={index}
-            className="min-w-[250px] sm:w-full bg-white shadow-md rounded-lg overflow-hidden"
+            className="min-w-[250px] sm:w-full bg-white shadow-md rounded-lg overflow-hidden "
           >
-            <div className="relative group">
+            <div className="relative group hover:scale-[1.05] transition-all overflow-hidden">
               <img
                 data-scroll
-                data-scroll-speed="0.05"
+                data-scroll-speed="-0.05"
                 src={elem.image}
                 alt={elem.subheading}
-                className="w-full sm:h-[60vh] h-[50vh] object-contain"
+                className="w-full sm:h-fit h-[50vh] object-contain "
               />
-              <div className="p-2 absolute top-0 left-0 w-full h-full flex items-center justify-center transition-opacity duration-300 ease-in-out group-hover:opacity-0"></div>
-              <h2 className="text-xl mb-2 w-full flex items-center justify-center">{elem.subheading}</h2>
             </div>
+              <h2 className="text-xl mb-2 w-full flex items-center justify-center sm:mt-6">{elem.subheading}</h2>
           </div>
         ))}
       </div>

@@ -77,7 +77,7 @@ const Landing = () => {
           data-scroll
           data-scroll-speed="-0.6"
           className="w-full h-full object-cover"
-          src="https://a.storyblok.com/f/133769/1920x2716/5c24d6b467/exo-ape-hero-1.jpg/m/2400x3395/filters:quality(90)"
+          src="https://images.unsplash.com/photo-1492778297155-7be4c83960c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
         />
       </motion.div>
@@ -85,7 +85,7 @@ const Landing = () => {
       <div className="w-full absolute top-0">
         <div className="text max-w-screen-2xl h-full mx-auto px-5 sm:px-10 text-white">
           <div className="headings mt-56 sm:mt-40">
-            <h1 className="text-7xl uppercase font-bold sm:text-[10rem] tracking-[-5px] ">
+            <h1 className="text-7xl uppercase font-semibold sm:text-[10rem] tracking-[-5px] font-MyCustomFont italic">
               <span>a</span>
               <motion.span
                 initial={{ rotate: 0, y: "50%", opacity: 0 }}
@@ -284,7 +284,7 @@ const Landing = () => {
               initial={{ y: "20%", scale: 0.85, opacity: 0 }}
               animate={{ y: 0, scale: 0.85, opacity: 1 }}
               transition={transitionProps}
-              className="sm:absolute sm:top-[75vh] sm:right-[15vw]  sm:text-4xl sm:z-[1] mt-8 inline-block bg-slate-500 p-3 font-bold tracking-tighter rounded-xl"
+              className="sm:absolute sm:top-[75vh] sm:right-[15vw]  sm:text-4xl sm:z-[1] mt-8 inline-block bg-blue-950 p-3 font-bold tracking-tighter rounded-xl"
               href="#"
             >
               SHOP NOW

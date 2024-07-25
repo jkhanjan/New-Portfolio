@@ -92,7 +92,7 @@ const Work = () => {
       onTouchEnd={handleDragEnd}
     >
       <div className="w-full flex justify-between items-center p- sm:px-60 sm:absolute sm:top-0">
-        <h1 className="text-3xl font-serif sm:text-6xl sm:tracking-tighter">
+        <h1 className="text-3xl sm:text-6xl sm:tracking-tighter">
           In the spotlight
         </h1>
         <div className="flex gap-10 text-2xl sm:text-4xl">
@@ -121,11 +121,11 @@ const Work = () => {
           {elems.map((item, index) => (
             <div
               key={index}
-              className="w-full h-full sm:h-fit flex-shrink-0 p-6 sm:scale-[77%]"
+              className="w-full h-full sm:h-fit flex-shrink-0 p-6 sm:scale-[77%] overflow-hidden"
             >
               <motion.img
                 data-scroll
-                data-scroll-speed="-0.2"
+                data-scroll-speed="-0.15"
                 src={item.image}
                 alt={item.subheading}
                 className="w-full h-full object-cover"
@@ -156,7 +156,7 @@ const Work = () => {
             {elems[currentSlide].subheading}
           </motion.h3>
           <motion.p
-            className="font-serif tracking-tighter text-[1.3rem] leading-none sm:text-[1.7rem]"
+            className=" tracking-tighter text-[1.3rem] leading-none sm:text-[1.5rem] italic"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}

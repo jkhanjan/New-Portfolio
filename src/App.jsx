@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css'
 import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
 import Work from "./components/Work";
@@ -9,6 +10,7 @@ import WhyUs from "./components/WhyUs";
 import Voices from "./components/Voices";
 import Story from "./components/Story";
 import Intrested from "./components/Intrested";
+import Footer from "./components/Footer";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -24,6 +26,7 @@ const App = () => {
       <Voices />
       <Story />
       <Intrested />
+      <Footer />
     </div>
   );
 };
