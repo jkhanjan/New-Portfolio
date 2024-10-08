@@ -1,42 +1,81 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { IoMenuSharp } from "react-icons/io5";
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="w-full absolute z-[9999]">
-      <div className=" max-w-screen-2xl h-20 flex items-center justify-between mx-auto px-5 py-5 sm:py-10 sm:px-10 text-white">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ ease: [], duration: 0.7 }}
-          className="logo"
+    <nav className="relative z-[100]">
+      <div className="flex items-center justify-between z-[100] p-4">
+        <button
+          className="flex items-center rounded text-gray-200 hover:text-white z-50"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
         >
-          <img
-          className="bg-blue-00 opacity-100"
-            src="https://bluetea.co.in/cdn/shop/files/Blue_tea_new_logo_150x150_303e39b1-2517-4a44-940d-b8fe915f4997_100x.png?v=1717096775"
-            alt=""
-          />
-        </motion.div>
-
-        <motion.span
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ ease: [], duration: 0.7 }}
-          className="sm:hidden"
-        >
-          <IoMenuSharp />
-        </motion.span>
-
-        <motion.div className="links hidden sm:flex gap-10">
-          {["Home", "About", "Pricing", "Contact"].map((item, index) => (
-            <a key={index} className="text-xs font-light font-['TWK_Lausanne] sm:text-xl">
-              {item}
-            </a>
-          ))}
-        </motion.div>
+          <div className="flex flex-col justify-center items-center w-6 h-6">
+            <div
+              className={`w-8 h-0.5 bg-black transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-1.5 bg-white" : ""
+              }`}
+            ></div>
+            <div
+              className={`w-8 h-0.5 bg-black my-1 transition-all duration-300 ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            ></div>
+            <div
+              className={`w-8 h-0.5 bg-black transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-1.5 bg-white" : ""
+              }`}
+            ></div>
+          </div>
+        </button>
       </div>
-    </div>
+
+      <div
+        className={`fixed flex-col right-[1%] top-0 rounded-3xl p-3 bg-gray-800 z-40 flex justify-center transition-all duration-300 ease-in-out ${
+          isOpen ? "h-[40vh]" : "h-[0vh] translate-y-[-100%]"
+        }`}
+      >
+        <ul className="flex  items-center text-white gap-6 justify-center">
+          {["Home", "Works", "Contact"].map((item, index) => (
+            <li key={item} className="overflow-hidden">
+              <a
+                href={`#${item.toLowerCase()}`}
+                className={`text-4xl sm:text-8xl hover:text-gray-300 transition-colors inline-block transform ${
+                  isOpen ? "translate-y-[0%]" : "translate-y-[-100%]"
+                } transition-all duration-500 ease-in-out`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <ul className="flex text-white gap-6 mt-4">
+          {["LinkedIn", "GitHub", "WhatsApp"].map((item, index) => (
+            <li key={item} className="overflow-hidden">
+              <a
+                href={`#${item.toLowerCase()}`}
+                className={`text-4xl sm:text-2xl hover:text-gray-300 transition-colors inline-block transform ${
+                  isOpen ? "translate-y-[0%]" : "translate-y-[-100%]"
+                } transition-all duration-500 ease-in-out`}
+                style={{
+                  transitionDelay: `${index * 100}ms`,
+                  fontFamily: "MyCustomFont",
+                }}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+      </div>
+    </nav>
   );
 };
 

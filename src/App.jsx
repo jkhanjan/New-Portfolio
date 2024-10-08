@@ -1,32 +1,51 @@
-import React from "react";
-import './App.css'
-import Navbar from "./components/Navbar";
-import Landing from "./components/Landing";
-import Work from "./components/Work";
+import React, { Suspense, useEffect, useRef } from "react";
+import "./App.css";
 import LocomotiveScroll from "locomotive-scroll";
-import Mover from "./components/Mover";
-import BestOf from "./components/BestOf";
-import WhyUs from "./components/WhyUs";
-import Voices from "./components/Voices";
-import Story from "./components/Story";
-import Intrested from "./components/Intrested";
 import Footer from "./components/Footer";
+import Loader from "./components/Loader";
+import CursorFollower from "./components/CursorFollower";
+
+
+const Scene = React.lazy(() => import("./3Dscene/Star"));
+const Page1 = React.lazy(() => import("./components/Page1"));
+const Page2 = React.lazy(() => import("./components/Page2"));
+const Page3 = React.lazy(() => import("./components/Page3"));
+const Page4 = React.lazy(() => import("./components/Page4"));
+const Page5 = React.lazy(() => import("./components/Page5"));
 
 const App = () => {
-  const locomotiveScroll = new LocomotiveScroll();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scroll = new LocomotiveScroll({
+      el: scrollRef.current,
+      smooth: true,
+    });
+
+    return () => {
+      scroll.destroy(); // Clean up the scroll instance
+    };
+  }, []);
 
   return (
-    <div className="w-full">
-      <Navbar />
-      <Landing />
-      <Mover />
-      <BestOf />
-      <Work />
-      <WhyUs />
-      <Voices />
-      <Story />
-      <Intrested />
-      <Footer />
+    <div
+      ref={scrollRef}
+      className="w-full h-full relative"
+      data-scroll-container
+    >
+      <Loader />
+      <div className="absolute z-[-1] w-full h-full">
+        <Suspense>
+          <Scene />
+        </Suspense>
+      </div>
+      {/* Insert CursorFollower to make sure it stays on top of everything */}
+      <CursorFollower />
+      <Page1 />
+      <Page2 />
+      <Page3 />
+      <Page4 />
+      <Page5 />
     </div>
   );
 };
