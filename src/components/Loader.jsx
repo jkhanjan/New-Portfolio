@@ -73,6 +73,7 @@ const Loader = () => {
       y: "-100%", // Use y instead of translateY for smoother performance
       duration: 0.5,
       ease: "power2.inOut",
+      display:"none"
     });
 
     // Move the second section down
@@ -82,6 +83,7 @@ const Loader = () => {
         y: "100%",
         duration: 0.5,
         ease: "power2.inOut",
+        display:'none'
       },
       "<"
     );
