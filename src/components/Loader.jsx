@@ -19,13 +19,13 @@ const Loader = () => {
       gsap.to([child1h1.current, child2h1.current], {
         opacity: 0.75,
         duration: 0.5,
-        delay: 0.1, // Small delay to ensure content is painted
+        delay: 0.1,
       });
 
       // Stagger effect on "Loading" text
       const loadingText = loadingRef.current;
-      const letters = loadingText.textContent.split("");
-      loadingText.textContent = "";
+      loadingText.innerHTML = ""; // Clear existing text
+      const letters = "Loading".split("");
 
       letters.forEach((letter) => {
         const span = document.createElement("span");
@@ -39,7 +39,7 @@ const Loader = () => {
         duration: 0.5,
         stagger: 0.1,
         ease: "power2.out",
-        delay: 0.2, // Delay loading animation slightly
+        delay: 0.2,
       });
 
       // Show "Click here" button after 3 seconds
@@ -70,8 +70,8 @@ const Loader = () => {
 
     // Move the first section up
     tl.to(child1.current, {
-      translateY: "-100%",
-      duration: 1,
+      y: "-100%", // Use y instead of translateY for smoother performance
+      duration: 0.5,
       ease: "power2.inOut",
     });
 
@@ -79,9 +79,8 @@ const Loader = () => {
     tl.to(
       child2.current,
       {
-        translateY: "100%",
-        duration: 1,
-        display: "none",
+        y: "100%",
+        duration: 0.5,
         ease: "power2.inOut",
       },
       "<"
