@@ -17,7 +17,7 @@ const Page1 = () => {
       </nav>
 
       <h1
-        className="text-[12vh] tracking-tight font-medium text-black opacity-75 leading-none sm:text-[39vh] sm:tracking-[0px] sm:leading-1"
+        className=" text-[12vh] tracking-tight font-medium text-black opacity-75 leading-none sm:text-[39vh] sm:tracking-[0px] sm:leading-1"
         data-scroll
         data-scroll-speed="0.1"
       >
@@ -25,7 +25,7 @@ const Page1 = () => {
       </h1>
 
       <div
-        className="flex w-full justify-end relative z-[100] absolute z-[100]"
+        className="flex w-full justify-end absolute z-[100] bottom-0"
         data-scroll
         data-scroll-speed="0.5"
       >

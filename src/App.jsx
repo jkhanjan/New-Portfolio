@@ -3,8 +3,6 @@ import "./App.css";
 import LocomotiveScroll from "locomotive-scroll";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
-import CursorFollower from "./components/CursorFollower";
-
 
 const Scene = React.lazy(() => import("./3Dscene/Star"));
 const Page1 = React.lazy(() => import("./components/Page1"));
@@ -33,14 +31,15 @@ const App = () => {
       className="w-full h-full relative"
       data-scroll-container
     >
-      <Loader />
+      <div className="absolute z-[10] w-full h-screen">
+        {" "}
+        <Loader />
+      </div>
       <div className="absolute z-[-1] w-full h-full">
         <Suspense>
           <Scene />
         </Suspense>
       </div>
-      {/* Insert CursorFollower to make sure it stays on top of everything */}
-      <CursorFollower />
       <Page1 />
       <Page2 />
       <Page3 />

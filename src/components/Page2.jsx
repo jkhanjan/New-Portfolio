@@ -1,89 +1,79 @@
 import gsap from "gsap";
-import profile from '../../public/font/profile-pic.png'
+import profile from "../../public/font/profile-pic.png";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
-import Scene from "../3Dscene/Star";
+import { useEffect, useRef, useCallback } from "react";
+
 
 const Page2 = () => {
   const parent = useRef(null);
   const img = useRef(null);
-  const para = useRef([]);
-  const aboutMe = useRef([]);
-  const childRefs = useRef([]); // Array to hold multiple refs
+  const paraRefs = useRef([]);
+  const aboutMeRefs = useRef([]);
+  const letterRefs = useRef([]);
 
-  // Helper to assign refs
-  const addToRefs = (el) => {
-    if (el && !childRefs.current.includes(el)) {
-      childRefs.current.push(el); // Push each element ref into array
+  // Helper to assign refs (simplified)
+  const addToRefs = useCallback((el, refArray) => {
+    if (el && !refArray.current.includes(el)) {
+      refArray.current.push(el);
     }
-  };
-  const AboutRefs = (el) => {
-    if (el && !aboutMe.current.includes(el)) {
-      aboutMe.current.push(el); // Push each element ref into array
-    }
-  };
-  const addToParaRefs = (el) => {
-    if (el && !para.current.includes(el)) {
-      para.current.push(el); // Push each element ref into array
-    }
-  };
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Main timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: parent.current,
         start: "top 30%",
         end: "bottom bottom",
         scrub: true,
-        // markers: true,
-      },
-    });
-    const tl2 = gsap.timeline({
-      scrollTrigger: {
-        trigger: childRefs.current,
-        start: "top 60%",
-        end: "bottom bottom",
-        scrub: true,
-        // markers: true,
+        // markers: true, // Uncomment for debugging
       },
     });
 
-    tl.from(childRefs.current, {
+    tl.from(letterRefs.current, {
       translateY: "100%",
       ease: "power4.out",
       duration: 2.5,
-      stagger: 0.1, // Stagger to animate each one in sequence
-    });
-    tl2.from(aboutMe.current, {
-      translateY: "100%",
-      ease: "power4.out",
-      duration: 0.5,
-      stagger: 0.01, // Stagger to animate each one in sequence
-    });
-    tl.from(
-      img.current,
-      {
-        translateY: "110%",
-        rotate: 10,
-        ease: "power4.out",
-        duration: 2.5,
-        stagger: 0.1, // Stagger to animate each one in sequence
-      },
-      "-=2.5"
-    );
-    tl2.from(
-      para.current,
-      {
-        opacity: 0,
-        translateY: "120%",
-        ease: "power4.out",
-        duration: 2.5,
-        stagger: 0.1,
-      },
-      "-=2.5"
-    );
+      stagger: 0.1,
+    })
+      .from(
+        img.current,
+        {
+          translateY: "110%",
+          rotate: 10,
+          ease: "power4.out",
+          duration: 2.5,
+        },
+        "-=2.5"
+      )
+      .from(
+        paraRefs.current,
+        {
+          opacity: 0,
+          translateY: "120%",
+          ease: "power4.out",
+          duration: 2.5,
+          stagger: 0.1,
+        },
+        "-=2.5"
+      )
+      .from(
+        aboutMeRefs.current,
+        {
+          translateY: "100%",
+          ease: "power4.out",
+          duration: 0.5,
+          stagger: 0.01,
+        },
+        "-=2.5"
+      );
+
+    return () => {
+      // Clean up GSAP animations on unmount
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   return (
@@ -94,59 +84,38 @@ const Page2 = () => {
       data-scroll-section
     >
       <div className="w-full h-fit flex items-center justify-center text-9xl overflow-hidden text-black opacity-75 relative sm:text-[68vh] sm:tracking-[7px]">
-        <div ref={addToRefs}>
-          <h1 className="">H</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">E</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">L</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">L</h1>
-        </div>
+        {["H", "E", "L", "L", "O", "O", "O", "O", "O"].map((letter, index) => (
+          <div key={index} ref={(el) => addToRefs(el, letterRefs)}>
+            <h1>{letter}</h1>
+          </div>
+        ))}
         <img
           ref={img}
-          className="w-[40vw] h-[33vh] object-cover absolute  top-0 z-[10] sm:w-[35vw] sm:h-[60vh] sm:top-[4%]"
+          className="w-[40vw] h-[33vh] object-cover absolute top-0 z-[10] sm:w-[35vw] sm:h-[60vh] sm:top-[4%]"
           src={profile}
-          alt=""
+          alt="Profile"
+          loading="lazy"
         />
-        <div ref={addToRefs}>
-          <h1 className="">O</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">O</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">O</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">O</h1>
-        </div>
-        <div ref={addToRefs}>
-          <h1 className="">O</h1>
-        </div>
       </div>
 
-      <div className="w-full sm:px-[6%] sm:flex sm:justify-around sm:items-center ">
+      <div className="w-full sm:px-[6%] sm:flex sm:justify-around sm:items-center">
         <div
           style={{ fontFamily: "MyCustomFont" }}
-          className="overflow-hidden sm:w-full "
+          className="overflow-hidden sm:w-full"
         >
           <p
             className="p-4 text-[2.7vh] tracking-tight mt-[5vh] sm:w-[85%] sm:p-0 sm:tracking-wide sm:mt-[0vh]"
-            ref={addToParaRefs}
+            ref={(el) => addToRefs(el, paraRefs)}
           >
             My name is Khanjan Jha, and I'm a front-end developer, who creates
-            websites with a special focus on animations and user interactions.{" "}
+            websites with a special focus on animations and user interactions.
           </p>
           <p
             className="p-4 sm:w-[85%] text-[2.7vh] tracking-tight sm:p-0 sm:tracking-normal"
-            ref={addToParaRefs}
+            ref={(el) => addToRefs(el, paraRefs)}
           >
             I'm ready to bring your ideas to life and add a touch of originality
-            to the online space.{" "}
+            to the online space.
           </p>
         </div>
 
@@ -156,66 +125,32 @@ const Page2 = () => {
 
         <div
           style={{ fontFamily: "MyCustomFont" }}
-          className="flex flex-col gap-4 w-full mt-[10vh] overflow-hidden sm:mt-[5vh] "
+          className="flex flex-col gap-4 w-full mt-[10vh] overflow-hidden sm:mt-[5vh]"
         >
           <div
             className="leading-none flex justify-end items-end"
-            ref={addToParaRefs}
+            ref={(el) => addToRefs(el, paraRefs)}
           >
             <p className="w-[33%] flex sm:text-[2.3vh] sm:w-[20%]">
               Let's make your project special
             </p>
           </div>
+
           <div
             style={{ fontFamily: "MyCustomFont2" }}
-            className=" flex items-center text-5xl justify-center p-14 sm:p-0 sm:pt-20 overflow-hidden sm:justify-end sm:px-0 sm:text-5xl opacity-75 "
+            className="flex items-center text-5xl justify-center p-14 sm:p-0 sm:pt-20 overflow-hidden sm:justify-end sm:px-0 sm:text-5xl opacity-75"
           >
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">M</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">O</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">R</h1>
-            </div>
-            <div ref={AboutRefs} 
-            className="  mr-1">
-              <h1 className="border-b-2 border-black  ">E</h1>
-            </div>{" "}
-            <hr />
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">A</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">B</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">O</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">U</h1>
-            </div>
-            <div ref={AboutRefs} 
-            className=" mr-1">
-              <h1 className="border-b-2 border-black  ">T</h1>
-            </div>{" "}
-            <hr />
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">M</h1>
-            </div>
-            <div ref={AboutRefs}>
-
-              <h1 className="border-b-2 border-black  ">E</h1>
-            </div>
+            {["M", "O", "R", "E", "A", "B", "O", "U", "T", "M", "E"].map(
+              (letter, index) => (
+                <div
+                  key={index}
+                  ref={(el) => addToRefs(el, aboutMeRefs)}
+                  className={index === 3 || index === 9 ? "mr-1" : ""}
+                >
+                  <h1 className="border-b-2 border-black">{letter}</h1>
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Page4 = () => {
   return (
     <div className="w-full h-screen sm:h-[160vh] relative overflow-hidden">
@@ -10,6 +9,7 @@ const Page4 = () => {
         data-scroll
         data-scroll-speed="-0.4"
         alt=""
+        loading="lazy"
       />
 
       <h1

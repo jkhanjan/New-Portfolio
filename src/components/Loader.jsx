@@ -1,101 +1,147 @@
-import React, { useEffect, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { gsap } from "gsap";
 
 const Loader = () => {
-  const controls = useAnimation();
-  const [percentage, setPercentage] = useState(0);
-  const kjControls = useAnimation();
+  const container = useRef();
+  const child1 = useRef();
+  const child2 = useRef();
+  const child1h1 = useRef();
+  const child2h1 = useRef();
+  const loadingRef = useRef();
+  const buttonRef = useRef();
 
-  // Function to animate the entire page upwards and set display to none on complete
-  const handleUp = () => {
-    controls.start({
-      y: "-100vh", // Move the page up by 100% of the viewport height
-      transition: { duration: 0.8, ease: "easeInOut" },
-      transitionEnd: {
-        display: "none",
-      },
-    });
-  };
+  const [showButton, setShowButton] = useState(false);
 
-  // Increment percentage from 0 to 100
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPercentage((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          kjControls.start({ opacity: 1, y: 0, transition: { duration: 0.8 } });
-          return 100;
-        }
-        return prev + 1;
+    // Use requestAnimationFrame to delay animations until after the first paint
+    requestAnimationFrame(() => {
+      // Show "KHANJAN" text immediately
+      gsap.to([child1h1.current, child2h1.current], {
+        opacity: 0.75,
+        duration: 0.5,
+        delay: 0.1, // Small delay to ensure content is painted
       });
-    }, 50); // Adjust speed of the counter (50ms gives around 5 seconds to reach 100%)
-  }, [kjControls]);
 
-  // Define animation variants for letters
-  const letterVariants = {
-    hidden: { y: 100 },
-    visible: (i) => ({
-      y: 0,
-      transition: {
-        delay: i * 0.1, // Delay each letter
-        duration: 1.0,
-        ease: "easeIn",
+      // Stagger effect on "Loading" text
+      const loadingText = loadingRef.current;
+      const letters = loadingText.textContent.split("");
+      loadingText.textContent = "";
+
+      letters.forEach((letter) => {
+        const span = document.createElement("span");
+        span.textContent = letter;
+        loadingText.appendChild(span);
+      });
+
+      gsap.from(loadingText.children, {
+        opacity: 0,
+        x: -20,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+        delay: 0.2, // Delay loading animation slightly
+      });
+
+      // Show "Click here" button after 3 seconds
+      const timer = setTimeout(() => {
+        setShowButton(true);
+
+        // Button appear animation
+        gsap.from(buttonRef.current, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    });
+  }, []);
+
+  const handleClick = () => {
+    // Hide loading text and button
+    gsap.to([loadingRef.current, buttonRef.current], {
+      opacity: 0,
+      duration: 0.5,
+    });
+
+    // Create animation timeline
+    const tl = gsap.timeline();
+
+    // Move the first section up
+    tl.to(child1.current, {
+      translateY: "-100%",
+      duration: 1,
+      ease: "power2.inOut",
+    });
+
+    // Move the second section down
+    tl.to(
+      child2.current,
+      {
+        translateY: "100%",
+        duration: 1,
+        display: "none",
+        ease: "power2.inOut",
       },
-    }),
+      "<"
+    );
   };
-
-  // The letters for "LOADING"
-  const loadingText = ["L", "O", "A", "D", "I", "N", "G"];
 
   return (
-    <motion.div
-      className="w-full h-screen flex flex-col items-center justify-center z-[10] bg-white absolute"
-      animate={controls} // Animate the entire page on click
+    <div
+      ref={container}
+      className="h-screen z-[100] relative"
+      style={{ fontFamily: "MyCustomFont2" }}
     >
-      {/* Percentage display */}
-      {percentage < 100 ? (
-        <motion.div
-          className="text-[12vh]"
-          style={{ fontFamily: "MyCustomFont2" }}
-        >
-          {percentage}%
-        </motion.div>
-      ) : (
-        // KJ appears when percentage reaches 100
-        <motion.div
-          initial={{ opacity: 0, y: 50 }} // Initially hidden with downward offset
-          animate={kjControls} // Controlled by useAnimation hook
-          style={{ fontFamily: "MyCustomFont2" }}
-          className="text-[12vh] flex flex-col items-center"
-        >
-          <p>KJ</p>
-          <button
-            onClick={handleUp}
-            className="uppercase text-4xl border-b-2 border-black"
-            style={{ fontFamily: "MyCustomFont2" }}
+      {/* First section */}
+      <div
+        className="w-full h-[50%] absolute top-0 z-[1] bg-white"
+        ref={child1}
+      >
+        <div className="flex items-center justify-center absolute h-full w-full overflow-hidden">
+          <h1
+            ref={child1h1}
+            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute bottom-[-20%] sm:bottom-[-22%]"
           >
-            VISIT WEBSITE
-          </button>
-        </motion.div>
-      )}
+            KHANJAN
+          </h1>
+        </div>
+      </div>
 
       <div
-        className="flex absolute bottom-0 left-0 text-8xl"
-        style={{ fontFamily: "MyCustomFont2" }}
+        className="w-full h-[50%] absolute bottom-0 z-[1] bg-white"
+        ref={child2}
       >
-        {loadingText.map((letter, index) => (
-          <motion.h1
-            key={index}
-            custom={index}
-            initial="hidden"
-            animate="visible"
-            variants={letterVariants}
+        <div className="flex items-center justify-center absolute h-full w-full overflow-hidden">
+          <h1
+            ref={child2h1}
+            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute top-[-16%] sm:top-[-18%]"
           >
-            {letter}
-          </motion.h1>
-        ))}
+            KHANJAN
+          </h1>
+        </div>
       </div>
-    </motion.div>
+
+      {/* Loading text */}
+      <div
+        ref={loadingRef}
+        className="absolute bottom-2 sm:text-5xl text-3xl uppercase z-[100]"
+      >
+        Loading
+      </div>
+
+      {/* Click here button */}
+      {showButton && (
+        <button
+          ref={buttonRef}
+          onClick={handleClick}
+          className="absolute bottom-16 opacity-75 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded z-[100] sm:text-5xl text-3xl border-b-2 border-black uppercase"
+        >
+          Click here
+        </button>
+      )}
+    </div>
   );
 };
 
