@@ -1,14 +1,15 @@
 @font-face {
-    font-family: 'MyCustomFont';
-    src: url('/font/font1.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+  font-family: "MyCustomFont";
+  src: url("/font/font1.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
-    font-family: 'MyCustomFont2';
-    src: url('/font/font2.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+  font-family: "MyCustomFont2";
+  src: url("/font/font2.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

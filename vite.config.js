@@ -1,7 +1,13 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import viteCompression from "vite-plugin-compression";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    viteCompression({
+      algorithm: "brotliCompress", // You can also use 'gzip' or 'deflate'
+      ext: ".br", // Extension for Brotli compressed files
+      threshold: 10240, // Compress files larger than 10KB
+      deleteOriginFile: false, // Optionally, you can delete original files
+    }),
+  ],
+});

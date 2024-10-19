@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -103,9 +103,9 @@ const Page3 = () => {
     >
       <h1
         style={{ fontFamily: "MyCustomFont2" }}
-        className="sm:text-7xl text-5xl font-normal border-b-2 sm:border-b-2 border-gray-500 opacity-75"
+        className="sm:text-9xl text-5xl font-normal border-b-2 sm:border-b-2 border-gray-500 opacity-75 uppercase"
       >
-        SKILL SET
+        Skillset Highlights
       </h1>
 
       <div
@@ -117,7 +117,7 @@ const Page3 = () => {
             <div
               key={index}
               ref={addToRefs}
-              className="w-fit sm:px-6 px-4 py-2 sm:py-3 rounded-2xl border-2 border-black opacity-0 flex items-center gap-2"
+              className="w-fit sm:px-6 px-4 py-2 sm:py-3 rounded-3xl border-[1px] border-black opacity-0 flex items-center gap-2"
             >
               <div className="sm:text-3xl ">{skill.icon}</div>
               <p className="sm:text-3xl ">{skill.name}</p>

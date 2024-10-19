@@ -72,9 +72,7 @@ const Navbar = () => {
               </a>
             </li>
           ))}
-          <a href=""></a>
         </ul>
-
       </div>
     </nav>
   );

@@ -1,6 +1,6 @@
 import React from "react";
-import Scene3 from "../3Dscene/Scene3";
 import Footer from "./Footer";
+import Scene2 from "../3Dscene/Scene2";
 
 const Page5 = () => {
   return (
@@ -14,7 +14,9 @@ const Page5 = () => {
         </h1>
 
         <div className=" h-[90vh] sm:h-[60vh]  w-full flex flex-col sm:flex-row  items-center">
-          <Scene3 />
+          <div className="w-[80%] h-full justify-center items-center relative scale-125 sm:scale-110 sm:mb-20">
+            <Scene2 />
+          </div>
 
           <div className="flex flex-col gap-8 w-full items-center">
             <input

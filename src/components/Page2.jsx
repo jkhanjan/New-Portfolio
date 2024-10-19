@@ -1,8 +1,7 @@
 import gsap from "gsap";
-import profile from "../../public/font/profile-pic.png";
+import profile from "../../public/font/profile-pic.webp";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useCallback } from "react";
-
+import React, { useEffect, useRef, useCallback } from "react";
 
 const Page2 = () => {
   const parent = useRef(null);

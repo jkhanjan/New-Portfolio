@@ -13,11 +13,16 @@ const Footer = () => {
         style={{ fontFamily: "MyCustomFont" }}
         className="flex gap-4 sm:gap-8 sm:text-1xl"
       >
-        <a href="https://www.linkedin.com/in/khanjan-jha-07495723a/">
+        <a
+          href="https://www.linkedin.com/in/khanjan-jha-07495723a/"
+          alt="linkedin"
+        >
           LinkedIn
         </a>
         <h1>WhatsApp</h1>
-        <a href="https://github.com/jkhanjan">GitHub</a>
+        <a href="https://github.com/jkhanjan" alt="github">
+          GitHub
+        </a>
       </div>
     </div>
   );

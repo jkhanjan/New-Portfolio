@@ -1,41 +1,41 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Instance, Instances } from "@react-three/drei";
 
 function Stars() {
   const ref = useRef();
 
-  // Precompute star positions using useMemo to ensure they don't change on re-renders
   const starsPositions = useMemo(() => {
-    return [...Array(1000)].map(() => ({
-      position: [
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-      ],
-    }));
-  }, []); // Empty dependency array ensures this runs only once
+    return Array.from({ length: 1000 }, () => [
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 20,
+    ]);
+  }, []);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (ref.current) {
-      ref.current.rotation.x += 0.0005;
-      ref.current.rotation.y += 0.0005;
+      ref.current.rotation.x += 0.0005 * delta * 60;
+      ref.current.rotation.y += 0.0005 * delta * 60;
     }
   });
 
   return (
     <group ref={ref}>
-      {starsPositions.map((star, i) => (
-        <mesh key={i} position={star.position}>
-          <sphereGeometry args={[0.007, 8, 10]} />
-          <meshBasicMaterial color="black" />
-        </mesh>
-      ))}
+      <Instances>
+        <sphereGeometry args={[0.007, 8, 10]} />
+        <meshBasicMaterial color="black" />
+        {starsPositions.map((position, i) => (
+          <Instance key={i} position={position} />
+        ))}
+      </Instances>
     </group>
   );
 }
 
 function MouseRotation() {
   const { camera } = useThree();
+
   useEffect(() => {
     const handleMouseMove = (event) => {
       const { clientX, clientY } = event;
