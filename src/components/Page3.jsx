@@ -60,7 +60,7 @@ const Page3 = () => {
         end: "+=90%",
         scrub: true,
         pin: true,
-        markers: true,
+        // markers: true,
       },
     });
 
