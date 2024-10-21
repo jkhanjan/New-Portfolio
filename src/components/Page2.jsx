@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import profile from "../../public/font/profile-pic.webp";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useLayoutEffect, useRef, useCallback } from "react";
 
 const Page2 = () => {
   const parent = useRef(null);
@@ -17,7 +17,7 @@ const Page2 = () => {
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     // Main timeline

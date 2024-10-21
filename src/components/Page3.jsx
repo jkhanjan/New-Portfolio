@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { FaHtml5, FaJs, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 import {
   SiTailwindcss,
@@ -62,7 +62,7 @@ const Page3 = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const tl = gsap.timeline({

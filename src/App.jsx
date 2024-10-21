@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useLayoutEffect, useRef } from "react";
 import "./App.css";
 import LocomotiveScroll from "locomotive-scroll";
 import Footer from "./components/Footer";
@@ -14,7 +14,7 @@ const Page5 = React.lazy(() => import("./components/Page5"));
 const App = () => {
   const scrollRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const scroll = new LocomotiveScroll({
       el: scrollRef.current,
       smooth: true,

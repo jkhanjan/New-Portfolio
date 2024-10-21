@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { easing } from "maath";
 import {
@@ -24,7 +24,7 @@ const GlassKnot = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Handle mouse movement and update rotation
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleMouseMove = (event) => {
       setMouseMoved(true);
       setMousePosition({ x: event.clientX, y: event.clientY });
@@ -85,7 +85,7 @@ const GlassKnot = () => {
 const ResponsiveCanvas = () => {
   const { size, camera } = useThree();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const aspect = size.width / size.height;
     if (aspect > 1) {
       // Desktop adjustments
@@ -143,7 +143,6 @@ const Scene3 = () => {
           maxPolarAngle={Math.PI / 2}
         />
       </Canvas>
-      
     </div>
   );
 };

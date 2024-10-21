@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useLayoutEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Float } from "@react-three/drei";
 import { EffectComposer, Bloom, N8AO } from "@react-three/postprocessing";
@@ -59,7 +59,7 @@ const Scene2 = () => {
 const ResponsiveCanvas = () => {
   const { size, camera } = useThree();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const aspect = size.width / size.height;
     if (aspect > 1) {
       // Desktop adjustments

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import { gsap } from "gsap";
 
 const Loader = () => {
@@ -12,7 +12,7 @@ const Loader = () => {
 
   const [showButton, setShowButton] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Use requestAnimationFrame to delay animations until after the first paint
     requestAnimationFrame(() => {
       // Show "KHANJAN" text immediately
@@ -73,7 +73,7 @@ const Loader = () => {
       y: "-100%", // Use y instead of translateY for smoother performance
       duration: 0.5,
       ease: "power2.inOut",
-      display:"none"
+      display: "none",
     });
 
     // Move the second section down
@@ -83,7 +83,7 @@ const Loader = () => {
         y: "100%",
         duration: 0.5,
         ease: "power2.inOut",
-        display:'none'
+        display: "none",
       },
       "<"
     );

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
+import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { TorusKnot } from "@react-three/drei";
@@ -8,7 +8,7 @@ const GlassKnot = () => {
   const [hovered, setHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleMouseMove = (event) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
