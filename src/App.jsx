@@ -36,7 +36,7 @@ const App = () => {
         <Loader />
       </div>
       <div className="absolute z-[-1] w-full h-full">
-        <Suspense>
+        <Suspense fallback="scene is loading....">
           <Scene />
         </Suspense>
       </div>

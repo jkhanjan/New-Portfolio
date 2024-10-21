@@ -1,12 +1,7 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Float } from "@react-three/drei";
-import {
-  EffectComposer,
-  Bloom,
-  N8AO,
-  TiltShift2,
-} from "@react-three/postprocessing";
+import { EffectComposer, Bloom, N8AO } from "@react-three/postprocessing";
 
 // Lazy load heavy components
 const LazyGlassKnot = lazy(() => import("./GlassKnot"));
@@ -47,7 +42,6 @@ const Scene2 = () => {
         <EffectComposer disableNormalPass>
           <N8AO aoRadius={2} intensity={5} />
           <Bloom intensity={0.5} luminanceThreshold={0.9} />
-          <TiltShift2 blur={0.2} />
         </EffectComposer>
 
         <OrbitControls

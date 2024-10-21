@@ -1,10 +1,10 @@
 import React from "react";
-
+import img from '../../public/font/img3.avif'
 const Page4 = () => {
   return (
     <div className="w-full h-screen sm:h-[160vh] relative overflow-hidden">
       <img
-        src="https://plus.unsplash.com/premium_photo-1670963025018-27dd11a9b0ce?q=80&w=1906&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src={img}
         className="filter grayscale brightness-[60%] w-full h-full object-cover z-[2]"
         data-scroll
         data-scroll-speed="-0.4"

@@ -1,47 +1,59 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef } from "react";
-import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaGithub,
-} from "react-icons/fa";
+import { FaHtml5, FaJs, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 import {
   SiTailwindcss,
   SiNextdotjs,
   SiFramer,
-  SiMongodb,
   SiExpress,
+  SiMongodb,
   SiThreedotjs,
   SiGit,
 } from "react-icons/si";
-import { TbBrandGolang } from "react-icons/tb"; // Example icon
+
+const iconMap = {
+  FaHtml5: <FaHtml5 />,
+  FaJs: <FaJs />,
+  FaReact: <FaReact />,
+  FaNodeJs: <FaNodeJs />,
+  FaGithub: <FaGithub />,
+  SiTailwindcss: <SiTailwindcss />,
+  SiNextdotjs: <SiNextdotjs />,
+  SiFramer: <SiFramer />,
+  SiExpress: <SiExpress />,
+  SiMongodb: <SiMongodb />,
+  SiThreedotjs: <SiThreedotjs />,
+  SiGit: <SiGit />,
+};
+
+const IconComponent = ({ iconName }) => {
+  const Icon = iconMap[iconName];
+  return Icon ? <>{Icon}</> : null;
+};
 
 const Page3 = () => {
   const container = useRef(null);
   const skillRefs = useRef([]);
 
   const skills = [
-    { name: "HTML", icon: <FaHtml5 /> },
-    { name: "CSS", icon: <FaCss3Alt /> },
-    { name: "JAVASCRIPT", icon: <FaJs /> },
-    { name: "TAILWIND CSS", icon: <SiTailwindcss /> },
-    { name: "REACT JS", icon: <FaReact /> },
-    { name: "NEXT JS", icon: <SiNextdotjs /> },
-    { name: "GSAP", icon: <FaJs /> }, // Replace with any suitable icon if needed
-    { name: "FRAMER MOTION", icon: <SiFramer /> },
-    { name: "LENIS", icon: <TbBrandGolang /> }, // Replace with any suitable icon if needed
-    { name: "EXPRESS JS", icon: <SiExpress /> },
-    { name: "MONGODB", icon: <SiMongodb /> },
-    { name: "NODE JS", icon: <FaNodeJs /> },
-    { name: "LOCOMOTIVE JS", icon: <FaJs /> }, // Replace with any suitable icon if needed
-    { name: "THREE JS", icon: <SiThreedotjs /> },
-    { name: "REACT THREE FIBER", icon: <FaReact /> },
-    { name: "GIT", icon: <SiGit /> },
-    { name: "GITHUB", icon: <FaGithub /> },
+    { name: "HTML", icon: "FaHtml5" },
+    { name: "CSS", icon: "SiCss3" },
+    { name: "JAVASCRIPT", icon: "FaJs" },
+    { name: "TAILWIND CSS", icon: "SiTailwindcss" },
+    { name: "REACT JS", icon: "FaReact" },
+    { name: "NEXT JS", icon: "SiNextdotjs" },
+    { name: "GSAP", icon: "FaJs" },
+    { name: "FRAMER MOTION", icon: "SiFramer" },
+    { name: "LENIS", icon: "SiScrollreveal" },
+    { name: "EXPRESS JS", icon: "SiExpress" },
+    { name: "MONGODB", icon: "SiMongodb" },
+    { name: "NODE JS", icon: "FaNodeJs" },
+    { name: "LOCOMOTIVE JS", icon: "FaJs" },
+    { name: "THREE JS", icon: "SiThreedotjs" },
+    { name: "REACT THREE FIBER", icon: "FaReact" },
+    { name: "GIT", icon: "SiGit" },
+    { name: "GITHUB", icon: "FaGithub" },
   ];
 
   const addToRefs = (el) => {
@@ -60,7 +72,6 @@ const Page3 = () => {
         end: "+=90%",
         scrub: true,
         pin: true,
-        // markers: true,
       },
     });
 
@@ -70,10 +81,7 @@ const Page3 = () => {
       duration: 1,
     });
 
-    const shuffleArray = (array) => {
-      return array.sort(() => Math.random() - 0.5);
-    };
-
+    const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
     const shuffledSkills = shuffleArray(skillRefs.current);
 
     shuffledSkills.forEach((el) => {
@@ -98,7 +106,7 @@ const Page3 = () => {
 
   return (
     <div
-      className="w-full h-full sm:h-[100vh] sm:p-10 p-10  sm:mt-6 mt-6 relative z-[100] text-black"
+      className="w-full h-full sm:h-[100vh] sm:p-10 p-10 sm:mt-6 mt-6 relative z-[100] text-black"
       ref={container}
     >
       <h1
@@ -109,7 +117,7 @@ const Page3 = () => {
       </h1>
 
       <div
-        className="h-full w-full flex gap-4 justify-center items-center text-lg "
+        className="h-full w-full flex gap-4 justify-center items-center text-lg"
         style={{ fontFamily: "MyCustomFont" }}
       >
         <div className="w-full flex justify-center items-center flex-wrap gap-4">
@@ -119,8 +127,8 @@ const Page3 = () => {
               ref={addToRefs}
               className="w-fit sm:px-6 px-4 py-2 sm:py-3 rounded-3xl border-[1px] border-black opacity-0 flex items-center gap-2"
             >
-              <div className="sm:text-3xl ">{skill.icon}</div>
-              <p className="sm:text-3xl ">{skill.name}</p>
+              <IconComponent iconName={skill.icon} />
+              <p className="sm:text-3xl">{skill.name}</p>
             </div>
           ))}
         </div>

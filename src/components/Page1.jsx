@@ -17,7 +17,7 @@ const Page1 = () => {
       </nav>
 
       <h1
-        className=" text-[12vh] tracking-tight text-black opacity-75 leading-none sm:text-[39vh] sm:tracking-[0px] sm:leading-1"
+        className="text-[6rem] tracking-tight text-black opacity-75 leading-none sm:text-[20rem] sm:tracking-[0px] sm:leading-1"
         data-scroll
         data-scroll-speed="0.1"
       >
