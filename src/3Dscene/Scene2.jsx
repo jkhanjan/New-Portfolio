@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useLayoutEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Float } from "@react-three/drei";
 import { EffectComposer, Bloom, N8AO } from "@react-three/postprocessing";
+import { throttle } from "lodash";
 
 // Lazy load heavy components
 const LazyGlassKnot = lazy(() => import("./GlassKnot"));
@@ -10,7 +11,11 @@ const LazyEnvironment = lazy(() => import("./Environment"));
 const Scene2 = () => {
   return (
     <div style={{ width: "100%", height: "100%" }} className="absolute z-[0]">
-      <Canvas shadows camera={{ position: [0, 0, 34], fov: 10 }}>
+      <Canvas
+        shadows
+        camera={{ position: [0, 0, 34], fov: 10 }}
+        frameloop="demand"
+      >
         <ResponsiveCanvas />
         <spotLight
           position={[10, 10, 1]}
@@ -60,17 +65,19 @@ const ResponsiveCanvas = () => {
   const { size, camera } = useThree();
 
   useLayoutEffect(() => {
-    const aspect = size.width / size.height;
-    if (aspect > 1) {
-      // Desktop adjustments
-      camera.fov = 10;
-      camera.position.set(0, 0, 34);
-    } else {
-      // Mobile adjustments
-      camera.fov = 25;
-      camera.position.set(0, 0, 20);
-    }
-    camera.updateProjectionMatrix();
+    const handleResize = throttle(() => {
+      const aspect = size.width / size.height;
+      if (aspect > 1) {
+        camera.fov = 10;
+        camera.position.set(0, 0, 34);
+      } else {
+        camera.fov = 25;
+        camera.position.set(0, 0, 20);
+      }
+      camera.updateProjectionMatrix();
+    }, 200); // Throttle resize updates to every 200ms
+
+    handleResize();
   }, [size, camera]);
 
   return null;

@@ -15,6 +15,7 @@ import {
   N8AO,
   TiltShift2,
 } from "@react-three/postprocessing";
+import { throttle } from "lodash";
 
 const GlassKnot = () => {
   const meshRef = useRef();
@@ -86,17 +87,20 @@ const ResponsiveCanvas = () => {
   const { size, camera } = useThree();
 
   useLayoutEffect(() => {
-    const aspect = size.width / size.height;
-    if (aspect > 1) {
-      // Desktop adjustments
-      camera.fov = 7;
-      camera.position.set(0, 0, 34);
-    } else {
-      // Mobile adjustments
-      camera.fov = 25;
-      camera.position.set(0, 0, 20);
-    }
-    camera.updateProjectionMatrix();
+    const handleSize = throttle(() => {
+      const aspect = size.width / size.height;
+      if (aspect > 1) {
+        // Desktop adjustments
+        camera.fov = 7;
+        camera.position.set(0, 0, 34);
+      } else {
+        // Mobile adjustments
+        camera.fov = 25;
+        camera.position.set(0, 0, 20);
+      }
+      camera.updateProjectionMatrix();
+    }, 200);
+    handleSize();
   }, [size, camera]);
 
   return null;
@@ -105,7 +109,11 @@ const ResponsiveCanvas = () => {
 const Scene3 = () => {
   return (
     <div style={{ width: "100%", height: "100%" }} className=" z-[0]">
-      <Canvas shadows camera={{ position: [0, 0, 4], fov: 100 }}>
+      <Canvas
+        shadows
+        camera={{ position: [0, 0, 4], fov: 100 }}
+        frameloop="demand"
+      >
         <ResponsiveCanvas />
         <spotLight position={[10, 10, 1]} penumbra={1} castShadow angle={0.2} />
 

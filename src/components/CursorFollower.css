@@ -1,8 +1,0 @@
-.cursor-follower {
-  position: absolute;
-  background-color: gray;
-  border-radius: 50%;
-  pointer-events: none; /* Prevent interaction */
-  z-index: 9999;
-  transition: width 0.05s, height 0.05s, transform 0.05s; /* Quick transitions */
-}

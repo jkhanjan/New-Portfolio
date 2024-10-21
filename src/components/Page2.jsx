@@ -1,7 +1,28 @@
 import gsap from "gsap";
 import profile from "../../public/font/profile-pic.webp";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useLayoutEffect, useRef, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
+import { useGSAP } from "@gsap/react";
+
+// Throttle function
+const throttle = (func, limit) => {
+  let lastFunc;
+  let lastRan;
+  return function (...args) {
+    if (!lastRan) {
+      func.apply(this, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(lastFunc);
+      lastFunc = setTimeout(function () {
+        if (Date.now() - lastRan >= limit) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - lastRan));
+    }
+  };
+};
 
 const Page2 = () => {
   const parent = useRef(null);
@@ -17,10 +38,10 @@ const Page2 = () => {
     }
   }, []);
 
-  useLayoutEffect(() => {
+  const { timeline } = useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Main timeline
+    // Main timeline with a throttled function
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: parent.current,
@@ -31,49 +52,55 @@ const Page2 = () => {
       },
     });
 
-    tl.from(letterRefs.current, {
-      translateY: "100%",
-      ease: "power4.out",
-      duration: 2.5,
-      stagger: 0.1,
-    })
-      .from(
-        img.current,
-        {
-          translateY: "110%",
-          rotate: 10,
-          ease: "power4.out",
-          duration: 2.5,
-        },
-        "-=2.5"
-      )
-      .from(
-        paraRefs.current,
-        {
-          opacity: 0,
-          translateY: "120%",
-          ease: "power4.out",
-          duration: 2.5,
-          stagger: 0.1,
-        },
-        "-=2.5"
-      )
-      .from(
-        aboutMeRefs.current,
-        {
-          translateY: "100%",
-          ease: "power4.out",
-          duration: 0.5,
-          stagger: 0.01,
-        },
-        "-=2.5"
-      );
+    // Throttled GSAP animations
+    const throttledAnimation = throttle(() => {
+      tl.from(letterRefs.current, {
+        translateY: "100%",
+        ease: "power4.out",
+        duration: 2.5,
+        stagger: 0.1,
+      })
+        .from(
+          img.current,
+          {
+            translateY: "110%",
+            rotate: 10,
+            ease: "power4.out",
+            duration: 2.5,
+          },
+          "-=2.5"
+        )
+        .from(
+          paraRefs.current,
+          {
+            opacity: 0,
+            translateY: "120%",
+            ease: "power4.out",
+            duration: 2.5,
+            stagger: 0.1,
+          },
+          "-=2.5"
+        )
+        .from(
+          aboutMeRefs.current,
+          {
+            translateY: "100%",
+            ease: "power4.out",
+            duration: 0.5,
+            stagger: 0.01,
+          },
+          "-=2.5"
+        );
+    }, 200); // Throttle the animation, 200ms limit
+
+    // Execute throttled animation on scroll trigger
+    throttledAnimation();
 
     return () => {
       // Clean up GSAP animations on unmount
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, [parent, img, paraRefs, aboutMeRefs, letterRefs]);
 
   return (
     <div

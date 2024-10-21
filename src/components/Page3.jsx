@@ -1,6 +1,6 @@
+import React, { useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useLayoutEffect, useRef } from "react";
+import { throttle } from "lodash"; // Import throttle from Lodash
 import { FaHtml5, FaJs, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 import {
   SiTailwindcss,
@@ -11,7 +11,10 @@ import {
   SiThreedotjs,
   SiGit,
 } from "react-icons/si";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react"; // Import the useGSAP hook
 
+// Icon mapping
 const iconMap = {
   FaHtml5: <FaHtml5 />,
   FaJs: <FaJs />,
@@ -62,47 +65,49 @@ const Page3 = () => {
     }
   };
 
-  useLayoutEffect(() => {
+  // Use GSAP with the useGSAP hook and throttle ScrollTrigger
+  useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top top",
-        end: "+=90%",
-        scrub: true,
-        pin: true,
-      },
-    });
-
-    tl.to(container.current, {
-      backgroundColor: "#3f3f46",
-      color: "white",
-      duration: 1,
-    });
-
-    const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
-    const shuffledSkills = shuffleArray(skillRefs.current);
-
-    shuffledSkills.forEach((el) => {
-      tl.fromTo(
-        el,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          borderColor: "white",
-          y: 0,
-          duration: 0.5,
-          delay: Math.random() * 0.5,
+    // Throttle function to limit scroll-based animations
+    const throttledTimeline = throttle(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top top",
+          end: "+=90%",
+          scrub: true,
+          pin: true,
         },
-        "-=0.8"
-      );
-    });
+      });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+      tl.to(container.current, {
+        backgroundColor: "#3f3f46",
+        color: "white",
+        duration: 1,
+      });
+
+      const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+      const shuffledSkills = shuffleArray(skillRefs.current);
+
+      shuffledSkills.forEach((el) => {
+        tl.fromTo(
+          el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            borderColor: "white",
+            y: 0,
+            duration: 0.5,
+            delay: Math.random() * 0.5,
+          },
+          "-=0.8"
+        );
+      });
+    }, 200); // Throttle the function to only run every 200ms
+
+    throttledTimeline(); // Call the throttled animation function
+  }, [skillRefs.current]);
 
   return (
     <div
