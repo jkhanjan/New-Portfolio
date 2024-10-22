@@ -67,7 +67,7 @@ function MouseRotation() {
 export default function Scene() {
   return (
     <div style={{ width: "100%", height: "100%" }} className="absolute z-[1]">
-      <Canvas camera={{ position: [0, 0, 10], fov: 90 }}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 90 }} frameloop="demand">
         <color attach="background" args={["white"]} />
         <Suspense fallback={<LoadingFallback />}>
           <Stars />
