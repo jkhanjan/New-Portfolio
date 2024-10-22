@@ -1,8 +1,9 @@
 import gsap from "gsap";
 import profile from "../../public/font/profile-pic.webp";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
+import Lenis from "@studio-freight/lenis";
 
 // Throttle function
 const throttle = (func, limit) => {
@@ -30,6 +31,34 @@ const Page2 = () => {
   const paraRefs = useRef([]);
   const aboutMeRefs = useRef([]);
   const letterRefs = useRef([]);
+
+  // Initialize Lenis
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 2.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // Connect GSAP ScrollTrigger with Lenis
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Connect Lenis to RequestAnimationFrame
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Cleanup
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   // Helper to assign refs (simplified)
   const addToRefs = useCallback((el, refArray) => {
@@ -107,7 +136,6 @@ const Page2 = () => {
       ref={parent}
       style={{ fontFamily: "MyCustomFont2" }}
       className="w-full h-full flex flex-col justify-center items-center z-[1] bg-transparent relative"
-      data-scroll-section
     >
       <div className="w-full h-fit flex items-center justify-center text-9xl overflow-hidden text-black opacity-75 relative sm:text-[68vh] sm:tracking-[7px]">
         {["H", "E", "L", "L", "O", "O", "O", "O", "O"].map((letter, index) => (

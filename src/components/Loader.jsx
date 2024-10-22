@@ -1,5 +1,7 @@
-import React, { useRef, useLayoutEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { gsap } from "gsap";
+import Lenis from "@studio-freight/lenis"; // Import Lenis for smooth scrolling
+import { useGSAP } from "@gsap/react";
 
 const Loader = () => {
   const container = useRef();
@@ -11,7 +13,7 @@ const Loader = () => {
   const buttonRef = useRef();
   const [showButton, setShowButton] = useState(false);
 
-  useLayoutEffect(() => {
+  useGSAP(() => {
     let ctx = gsap.context(() => {
       // Initial setup - ensure elements are in their starting positions
       gsap.set([child1h1.current, child2h1.current], { opacity: 0 });
@@ -86,6 +88,26 @@ const Loader = () => {
     }, container);
 
     return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 2.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy(); // Cleanup Lenis when component unmounts
+    };
   }, []);
 
   const handleClick = () => {

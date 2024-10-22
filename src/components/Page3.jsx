@@ -13,6 +13,7 @@ import {
 } from "react-icons/si";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react"; // Import the useGSAP hook
+import Lenis from "lenis";
 
 // Icon mapping
 const iconMap = {
@@ -38,6 +39,7 @@ const IconComponent = ({ iconName }) => {
 const Page3 = () => {
   const container = useRef(null);
   const skillRefs = useRef([]);
+  const lenisRef = useRef(null);
 
   const skills = [
     { name: "HTML", icon: "FaHtml5" },
@@ -67,7 +69,26 @@ const Page3 = () => {
 
   // Use GSAP with the useGSAP hook and throttle ScrollTrigger
   useGSAP(() => {
+    const lenis = new Lenis({
+      duration:2.4,
+      easing: (t) => 1 - Math.cos((t * Math.PI) / 2),
+      smooth: true,
+    });
+    lenisRef.current = lenis;
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.scrollerProxy(container.current, {
+      scrollTop(value) {
+        return arguments.length
+          ? lenis.scrollTo(value, { immediate: true })
+          : lenis.scroll;
+      },
+    });
 
     // Throttle function to limit scroll-based animations
     const throttledTimeline = throttle(() => {
@@ -107,6 +128,13 @@ const Page3 = () => {
     }, 200); // Throttle the function to only run every 200ms
 
     throttledTimeline(); // Call the throttled animation function
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      lenis.destroy();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, [skillRefs.current]);
 
   return (
@@ -122,7 +150,7 @@ const Page3 = () => {
       </h1>
 
       <div
-        className="sm:h-[80%] h-full w-full flex gap-4 justify-center items-center text-lg"
+        className="sm:h-[80%] h-fu w-full flex gap-4 justify-center items-center text-lg"
         style={{ fontFamily: "MyCustomFont" }}
       >
         <div className="w-full flex justify-center items-center flex-wrap gap-4">

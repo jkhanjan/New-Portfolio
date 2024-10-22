@@ -1,6 +1,6 @@
-import React, { Suspense, useLayoutEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import "./App.css";
-import LocomotiveScroll from "locomotive-scroll";
+import Lenis from "@studio-freight/lenis";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 
@@ -14,25 +14,28 @@ const Page5 = React.lazy(() => import("./components/Page5"));
 const App = () => {
   const scrollRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 2.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
     });
 
+    const animate = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+
     return () => {
-      scroll.destroy(); // Clean up the scroll instance
+      lenis.destroy(); // Clean up Lenis instance on component unmount
     };
   }, []);
 
   return (
-    <div
-      ref={scrollRef}
-      className="w-full h-full relative"
-      data-scroll-container
-    >
+    <div ref={scrollRef} className="w-full h-full relative">
       <div className="absolute z-[10] w-full h-screen">
-        {" "}
         <Loader />
       </div>
       <div className="absolute z-[-1] w-full h-full">
