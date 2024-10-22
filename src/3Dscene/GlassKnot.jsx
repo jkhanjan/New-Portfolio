@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import { TorusKnot } from "@react-three/drei";
+import { throttle } from "lodash";
 
 const GlassKnot = () => {
   const meshRef = useRef();
@@ -9,12 +10,15 @@ const GlassKnot = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
-    const handleMouseMove = (event) => {
+    const handleMouseMove = throttle((event) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
-    };
+    }, 50); // Adjust the delay (50ms in this case) to throttle the function
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      handleMouseMove.cancel(); // Cancel throttled function when component unmounts
+    };
   }, []);
 
   useFrame((state, delta) => {

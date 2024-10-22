@@ -1,6 +1,8 @@
 import React, { useRef, useMemo, useLayoutEffect, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Instance, Instances } from "@react-three/drei";
+import { throttle } from "lodash";
+
 
 // Simple fallback component
 function LoadingFallback() {
@@ -12,7 +14,7 @@ function Stars() {
 
   const starsPositions = useMemo(() => {
     // Reduce the number of stars for faster initial load
-    return Array.from({ length: 600 }, () => [
+    return Array.from({ length: 650 }, () => [
       (Math.random() - 0.5) * 20,
       (Math.random() - 0.5) * 20,
       (Math.random() - 0.5) * 20,
@@ -44,7 +46,7 @@ function MouseRotation() {
   const { camera } = useThree();
 
   useLayoutEffect(() => {
-    const handleMouseMove = (event) => {
+    const handleMouseMove = throttle((event) => {
       const { clientX, clientY } = event;
       const { innerWidth, innerHeight } = window;
 
@@ -53,11 +55,12 @@ function MouseRotation() {
 
       camera.rotation.y = (mouseX * Math.PI) / 80;
       camera.rotation.x = (mouseY * Math.PI) / 80;
-    };
+    }, 50); // Throttling to update every 50ms (adjust as needed)
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      handleMouseMove.cancel(); // Cancel throttled function when unmounting
     };
   }, [camera]);
 
