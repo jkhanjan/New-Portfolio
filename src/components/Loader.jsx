@@ -9,101 +9,146 @@ const Loader = () => {
   const child2h1 = useRef();
   const loadingRef = useRef();
   const buttonRef = useRef();
-
   const [showButton, setShowButton] = useState(false);
 
   useLayoutEffect(() => {
-    // Use requestAnimationFrame to delay animations until after the first paint
-    requestAnimationFrame(() => {
-      // Show "KHANJAN" text immediately
-      gsap.to([child1h1.current, child2h1.current], {
+    let ctx = gsap.context(() => {
+      // Initial setup - ensure elements are in their starting positions
+      gsap.set([child1h1.current, child2h1.current], { opacity: 0 });
+      gsap.set(loadingRef.current, { opacity: 0 });
+
+      // Create main timeline with better easing
+      const mainTl = gsap.timeline({
+        defaults: {
+          ease: "power2.inOut",
+        },
+      });
+
+      // Text reveal animation with slower timing
+      mainTl.to([child1h1.current, child2h1.current], {
         opacity: 0.75,
-        duration: 0.5,
-        delay: 0.1,
-      });
-
-      // Stagger effect on "Loading" text
-      const loadingText = loadingRef.current;
-      loadingText.innerHTML = ""; // Clear existing text
-      const letters = "Loading".split("");
-
-      letters.forEach((letter) => {
-        const span = document.createElement("span");
-        span.textContent = letter;
-        loadingText.appendChild(span);
-      });
-
-      gsap.from(loadingText.children, {
-        opacity: 0,
-        x: -20,
-        duration: 0.5,
-        stagger: 0.1,
+        duration: 1,
         ease: "power2.out",
-        delay: 0.2,
       });
 
-      // Show "Click here" button after 3 seconds
-      const timer = setTimeout(() => {
-        setShowButton(true);
+      // Loading text animation
+      const loadingText = loadingRef.current;
+      loadingText.innerHTML = "Loading"
+        .split("")
+        .map((letter) => `<span class="inline-block">${letter}</span>`)
+        .join("");
 
-        // Button appear animation
-        gsap.from(buttonRef.current, {
-          opacity: 0,
+      mainTl
+        .to(loadingText, {
+          opacity: 1,
           duration: 0.5,
-          ease: "power2.out",
-        });
-      }, 3000);
+        })
+        .fromTo(
+          loadingText.children,
+          {
+            opacity: 0,
+            y: 20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: {
+              each: 0.1,
+              ease: "power2.out",
+            },
+          },
+          "<"
+        );
 
-      return () => clearTimeout(timer);
-    });
+      // Button reveal after loading
+      setTimeout(() => {
+        setShowButton(true);
+        // Delay the animation slightly to ensure the button is mounted
+        setTimeout(() => {
+          if (buttonRef.current) {
+            gsap.fromTo(
+              buttonRef.current,
+              {
+                opacity: 0,
+                y: 20,
+              },
+              {
+                opacity: 0.75, // Match the opacity with the design
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+              }
+            );
+          }
+        }, 100); // Small delay to ensure button is in DOM
+      }, 3000);
+    }, container);
+
+    return () => ctx.revert();
   }, []);
 
   const handleClick = () => {
-    // Hide loading text and button
-    gsap.to([loadingRef.current, buttonRef.current], {
-      opacity: 0,
-      duration: 0.5,
-    });
+    // Create a new context for exit animations
+    const ctx = gsap.context(() => {
+      // Create exit timeline with smoother easing
+      const exitTl = gsap.timeline({
+        defaults: {
+          ease: "power4.inOut",
+          duration: 1.2,
+        },
+      });
 
-    // Create animation timeline
-    const tl = gsap.timeline();
-
-    // Move the first section up
-    tl.to(child1.current, {
-      y: "-100%", // Use y instead of translateY for smoother performance
-      duration: 0.5,
-      ease: "power2.inOut",
-      display: "none",
-    });
-
-    // Move the second section down
-    tl.to(
-      child2.current,
-      {
-        y: "100%",
+      // Fade out loading elements with slight delay
+      exitTl.to([loadingRef.current, buttonRef.current], {
+        opacity: 0,
         duration: 0.5,
-        ease: "power2.inOut",
-        display: "none",
-      },
-      "<"
-    );
+        ease: "power2.out",
+      });
+
+      // Animate sections with better timing and easing
+      exitTl.to(
+        child1.current,
+        {
+          y: "-100%",
+          force3D: true,
+          onStart: () => {
+            document.body.style.overflow = "hidden";
+          },
+        },
+        0.2
+      );
+
+      exitTl.to(
+        child2.current,
+        {
+          y: "100%",
+          force3D: true,
+          onComplete: () => {
+            document.body.style.overflow = "";
+          },
+        },
+        0.2
+      );
+    }, container);
+
+    return () => ctx.revert();
   };
 
   return (
     <div
       ref={container}
-      className="h-screen z-[100] relative"
+      className="h-screen z-[100] relative overflow-hidden will-change-transform"
       style={{ fontFamily: "MyCustomFont2" }}
     >
-      {/* First section */}
       <div
-        className="w-full h-[50%] absolute top-0 z-[1] bg-white"
+        className="w-full h-[50%] absolute top-0 z-[1] bg-white will-change-transform"
         ref={child1}
       >
         <div className="flex items-center justify-center absolute h-full w-full overflow-hidden">
           <h1
             ref={child1h1}
-            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute bottom-[-20%] sm:bottom-[-22%]"
+            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute bottom-[-20%] sm:bottom-[-22%] will-change-transform"
           >
             KHANJAN
           </h1>
@@ -111,33 +156,32 @@ const Loader = () => {
       </div>
 
       <div
-        className="w-full h-[50%] absolute bottom-0 z-[1] bg-white"
+        className="w-full h-[50%] absolute bottom-0 z-[1] bg-white will-change-transform"
         ref={child2}
       >
         <div className="flex items-center justify-center absolute h-full w-full overflow-hidden">
           <h1
             ref={child2h1}
-            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute top-[-16%] sm:top-[-18%]"
+            className="text-9xl sm:text-[20vh] text-black opacity-0 font-semibold tracking-wide absolute top-[-16%] sm:top-[-18%] will-change-transform"
           >
             KHANJAN
           </h1>
         </div>
       </div>
 
-      {/* Loading text */}
       <div
         ref={loadingRef}
-        className="absolute bottom-2 sm:text-5xl text-3xl uppercase z-[100]"
+        className="absolute bottom-2 sm:text-5xl text-3xl uppercase z-[100] will-change-transform"
       >
         Loading
       </div>
 
-      {/* Click here button */}
       {showButton && (
         <button
           ref={buttonRef}
           onClick={handleClick}
-          className="absolute bottom-16 opacity-75 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded z-[100] sm:text-5xl text-3xl border-b-2 border-black uppercase"
+          className="absolute bottom-16 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded z-[100] sm:text-5xl text-3xl border-b-2 border-black uppercase will-change-transform hover:opacity-100 transition-opacity"
+          style={{ opacity: 0 }} // Set initial opacity in style
         >
           Click here
         </button>

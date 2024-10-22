@@ -122,7 +122,7 @@ const Page3 = () => {
       </h1>
 
       <div
-        className="h-full w-full flex gap-4 justify-center items-center text-lg"
+        className="sm:h-[80%] h-full w-full flex gap-4 justify-center items-center text-lg"
         style={{ fontFamily: "MyCustomFont" }}
       >
         <div className="w-full flex justify-center items-center flex-wrap gap-4">
